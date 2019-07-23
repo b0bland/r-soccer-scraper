@@ -1,9 +1,6 @@
 var path = require("path");
 var express = require("express");
-var mongoose = require("mongoose");
 var exphbs  = require("express-handlebars");
-var axios = require("axios");
-var cheerio = require("cheerio");
 
 var db = require("./models");
 
