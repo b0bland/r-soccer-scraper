@@ -1,18 +1,27 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const exphbs  = require('express-handlebars');
-const axios = require("axios");
-const cheerio = require("cheerio");
+var path = require("path");
+var express = require("express");
+var mongoose = require("mongoose");
+var exphbs  = require("express-handlebars");
+var axios = require("axios");
+var cheerio = require("cheerio");
 
-const db = require("./models");
+var db = require("./models");
 
-const PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
-const app = express();
+var app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+app.get("/", function(req,res) {
+    console.log("test" + res)
+    res.render("index", console.log("Render success"))
+})
 
 app.get("/scrape", function(req,res) {
     axios.get("https://old.reddit.com/r/soccer/").then(function(response) {
@@ -41,4 +50,8 @@ app.get("/articles", function(req,res) {
         }).catch(function(err) {
             res.json(err);
         })
+})
+
+app.listen(PORT, function() {
+    console.log("App running on port " + PORT)
 })
