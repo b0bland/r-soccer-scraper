@@ -7,9 +7,9 @@ module.exports = function(app, db) {
     })
     
     app.get("/scrape", function(req,res) {
+        db.Article.remove({})
         axios.get("https://old.reddit.com/r/soccer/").then(function(response) {
             var $ = cheerio.load(response.data);
-    
             $("a.title").each(function(i,element) {
                 var result = {};
 
@@ -25,7 +25,7 @@ module.exports = function(app, db) {
                 }
     
                 db.Article.create(result).then(function(dbArticle) {
-                    console.log(dbArticle)
+                    // console.log(dbArticle)
                 }).catch(function(err) {
                     console.log(err);
                 })
