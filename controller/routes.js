@@ -3,23 +3,29 @@ var cheerio = require("cheerio");
 
 module.exports = function(app, db) {
     app.get("/", function(req,res) {
-        console.log("test" + res)
         res.render("index", console.log("Render success"))
     })
     
     app.get("/scrape", function(req,res) {
         axios.get("https://old.reddit.com/r/soccer/").then(function(response) {
-    
             var $ = cheerio.load(response.data);
     
             $("a.title").each(function(i,element) {
                 var result = {};
-    
+
                 result.title = $(this).text();
-                result.link = $(this).attr("href");
+
+                if ($(this).attr("href").startsWith("/r/")) {
+                    var linkurl = "https://old.reddit.com";
+                    linkurl += $(this).attr("href");
+                    result.link = linkurl;
+                }
+                else {
+                    result.link = $(this).attr("href");
+                }
     
                 db.Article.create(result).then(function(dbArticle) {
-                    console.log(dbArticle);
+                    console.log("Scrape")
                 }).catch(function(err) {
                     console.log(err);
                 })
@@ -28,11 +34,16 @@ module.exports = function(app, db) {
     })
     
     app.get("/articles", function(req,res) {
+        console.log("Step 1")
+        console.log(db.Article)
         db.Article.find({})
             .then(function(dbArticle) {
-                res.json(dbArticle);
+                console.log("Step 2")
+                console.log(dbArticle)
+                res.render("articles", {article: dbArticle})
             }).catch(function(err) {
-                res.json(err);
+                console.log(err);
             })
+        
     })
 }

@@ -1,6 +1,7 @@
 var path = require("path");
 var express = require("express");
 var exphbs  = require("express-handlebars");
+var mongoose = require("mongoose");
 
 var db = require("./models");
 
@@ -14,6 +15,9 @@ app.use(express.static("public"));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(MONGODB_URI);
 
 require("./controller/routes")(app, db)
 
