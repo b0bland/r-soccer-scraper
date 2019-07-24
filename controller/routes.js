@@ -25,11 +25,12 @@ module.exports = function(app, db) {
                 }
     
                 db.Article.create(result).then(function(dbArticle) {
-                    console.log("Scrape")
+                    console.log(dbArticle)
                 }).catch(function(err) {
                     console.log(err);
                 })
             })
+            res.send(true)
         })
     })
     

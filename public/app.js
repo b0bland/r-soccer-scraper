@@ -4,7 +4,7 @@ $("#scrapeButton").on("click", function(event) {
     $.get("/scrape", function(data) {
         console.log("/scrape success")
         console.log(data)
-      if (data.status) window.location.href = "/articles"
+        if (data) {window.location.href = "/articles"}
     })
     
   })
