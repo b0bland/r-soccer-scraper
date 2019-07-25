@@ -25,3 +25,20 @@ $(".articleSave").on("click", function(event) {
         }
     })
 })
+
+$(".articleDelete").on("click", function(event) {
+    console.log("Delete Article Click " + event.target.id)
+    var thisId = event.target.id;
+
+    $.ajax({
+        url: `/articles/delete/${thisId}`,
+        method: "DELETE",
+        success: function (response) {
+            window.location.href = "/articles";
+        },
+        error: function (error) {
+          console.log(error);
+          window.location.href = "/saved";
+        }
+    })
+})

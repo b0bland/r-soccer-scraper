@@ -65,4 +65,13 @@ module.exports = function(app, db) {
                 console.log(err);
             })
     })
+
+    app.delete('/articles/delete/:id', function(req,res){
+        db.Article.remove({_id: req.params.id})
+        .then(function() {
+            res.redirect("/saved")
+        }).catch(function(err) {
+            console.log(err);
+        })
+    })
 }
