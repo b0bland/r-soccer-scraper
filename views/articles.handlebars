@@ -2,18 +2,19 @@
 
 <div class="row">
     {{#each article}}
-        <div class="col s12 m6">
-            <div class="card green lighten-4">
-                <div class="card-content">
-                <p>{{ title }}</p>
-                </div>
-                <div class="card-action">
-                <a href="{{ link }}">Link to article</a>
-                <a href="#">Save article</a>
+        {{#unless saved}}
+            <div class="col s12 m6">
+                <div class="card green lighten-4">
+                    <div class="card-content">
+                    <p>{{ title }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ link }}">Link to content</a>
+                        <a class="articleSave" id="{{this._id}}">Save article</a>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        {{/unless}}
     {{/each}}
 
 

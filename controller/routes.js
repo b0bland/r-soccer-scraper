@@ -45,6 +45,24 @@ module.exports = function(app, db) {
             }).catch(function(err) {
                 console.log(err);
             })
+    })
+
+    app.get("/articles/save/:id", function(req,res) {
+        db.Article.update({_id: req.params.id},{saved: true})
+        .then(function() {
+            res.redirect("/articles")
+        }).catch(function(err) {
+            console.log(err);
+        })
         
+    })
+
+    app.get("/saved", function(req,res) {
+        db.Article.find({})
+            .then(function(dbArticle) {
+                res.render("saved", {article: dbArticle})
+            }).catch(function(err) {
+                console.log(err);
+            })
     })
 }

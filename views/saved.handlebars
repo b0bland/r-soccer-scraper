@@ -1,0 +1,20 @@
+<h2>Saved Articles</h2>
+
+<div class="row">
+    {{#each article}}
+        {{#if saved}}
+            <div class="col s12 m6">
+                <div class="card green lighten-4">
+                    <div class="card-content">
+                    <p>{{ title }}</p>
+                    </div>
+                    <div class="card-action">
+                    <a href="{{ link }}">Link to content</a>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    {{/each}}
+
+
+</div>
